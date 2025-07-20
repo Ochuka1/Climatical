@@ -1,0 +1,2879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIN TANKER-Ke - Diaper Recycling Initiative</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #2e8b57;
+            --secondary: #3cb371;
+            --accent: #ff6b6b;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 0 2rem;
+        }
+        
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(46, 139, 87, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin-top: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid var(--accent);
+            margin: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--dark);
+        }
+        
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        #home {
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .home-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .home-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .home-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .highlight {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .no-text {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+        
+        .home-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .home-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .home-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--light);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .theme-section {
+            background-color: var(--light);
+        }
+        
+        .theme-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .theme-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .get-involved-section {
+            background-color: white;
+        }
+        
+        .involvement-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .option-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            width: 350px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-card:hover::before {
+            height: 10px;
+            background-color: var(--accent);
+        }
+        
+        .option-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .option-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .option-card .btn {
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+        
+        /* Participation Sections */
+        .participation-section {
+            background-color: var(--light);
+            padding: 4rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+        
+        .participation-section h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .participation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .participant-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .participant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .participant-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .participant-card p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .participant-card .location {
+            display: flex;
+            align-items: center;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        .participant-card .location i {
+            margin-right: 0.5rem;
+        }
+        
+        .add-participant-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            color: var(--accent);
+        }
+        
+        /* Progress Chart */
+        .progress-section {
+            background-color: var(--light);
+        }
+        
+        .chart-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-top: 2rem;
+        }
+        
+        .chart-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-controls select,
+        .chart-controls input {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .coverage-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+        
+        .coverage-stat {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            min-width: 200px;
+        }
+        
+        .coverage-stat h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .coverage-stat .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        /* Partner Section */
+        .partner-section {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .partner-section .section-title h2 {
+            color: white;
+        }
+        
+        .partner-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .partner-logo {
+            width: 150px;
+            height: 80px;
+            background-color: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            transition: var(--transition);
+            opacity: 0.7;
+        }
+        
+        .partner-logo:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        .partner-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .partner-management {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 3rem;
+        }
+        
+        .partner-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .partner-form input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .partner-form button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .partner-form button:hover {
+            background-color: #e05555;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+        
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        
+        .footer-logo span {
+            color: var(--accent);
+        }
+        
+        .footer-links, .footer-contact {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-links h3, .footer-contact h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-contact p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .footer-contact i {
+            margin-right: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        /* Contact Form Styles */
+        .contact-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .contact-form textarea {
+            min-height: 150px;
+        }
+        
+        .contact-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+        
+        .contact-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background-color: var(--light);
+            border-radius: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .contact-option:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .contact-option i {
+            font-size: 1.5rem;
+        }
+        
+        /* Map Styles */
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Image Upload Styles */
+        .image-upload-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .image-preview {
+            max-width: 150px;
+            max-height: 80px;
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .home-text h3 {
+                font-size: 1.5rem;
+            }
+            
+            .option-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+            }
+            
+            .participation-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-container">
+        <nav>
+            <a href="#" class="logo"><i class="fas fa-recycle"></i> BIN TANKER-Ke</a>
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#theme">Theme</a></li>
+                <li><a href="#get-involved">Get Involved</a></li>
+                <li><a href="#participants">Participants</a></li>
+                <li><a href="#progress">Progress</a></li>
+                <li><a href="#partners">Partners</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <header>
+        <div class="hero-content">
+            <h1>Safer Environment, Healthy Living!</h1>
+            <p>Join us in our mission to recycle diapers and create a cleaner, healthier world</p>
+            <div>
+                <a href="#get-involved" class="btn">Get Involved</a>
+                <a href="#partners" class="btn btn-outline">Partner With Us</a>
+            </div>
+        </div>
+        
+        <a href="#home" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+    </header>
+    
+    <section id="home">
+        <div class="section-title">
+            <h2>Our Initiative</h2>
+        </div>
+        
+        <div class="home-content">
+            <div class="home-text">
+                <h3>We <span class="highlight">BIN TANKER-Ke</span> take Initiative in Diapers Collection and Recycling</h3>
+                <p>Say <span class="no-text">NO</span> to Land and River Pollution. Diapers do not decompose and thus when disposed unprofessionally lead to pollution and health threats.</p>
+                <p>Our mission is to provide sustainable solutions for diaper waste management through collection, recycling, and public education worldwide.</p>
+            </div>
+            
+            <div class="home-image">
+                <img src="https://www.gbg.co.zw/wp-content/uploads/2020/09/diaper-disposal.png" alt="Environmental pollution from diapers">
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="countries-count">12</div>
+                <p>Countries Reached</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="regions-count">47</div>
+                <p>Regions Covered</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="villages-count">128</div>
+                <p>Villages Served</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="theme" class="theme-section">
+        <div class="section-title">
+            <h2>Our Theme</h2>
+        </div>
+        
+        <div class="theme-content">
+            <p>This initiative is mainly tasked to avert and restore Climatic Changes by incorporating all HANDS to publicly participate in one way or the other by Educating the community about the awareness of the misuse of Diapers.</p>
+            <p>We believe that through education, proper waste management, and innovative recycling solutions, we can significantly reduce the environmental impact of diaper waste globally.</p>
+        </div>
+    </section>
+    
+    <section id="get-involved" class="get-involved-section">
+        <div class="section-title">
+            <h2>Get Involved</h2>
+            <p>Join us in making a difference through various ways of participation</p>
+        </div>
+        
+        <div class="involvement-options">
+            <div class="option-card">
+                <i class="fas fa-hand-holding-usd"></i>
+                <h3>Become a Sponsor</h3>
+                <p>Support our project through financial contributions or in-kind donations to help us expand our reach and impact.</p>
+                <button class="btn" onclick="openModal('sponsor-modal')">Sponsor Us</button>
+            </div>
+            
+            <div class="option-card">
+                <i class="fas fa-hands-helping"></i>
+                <h3>Volunteer</h3>
+                <p>Join our team of dedicated volunteers in collection, sorting, or community education programs.</p>
+                <button class="btn" onclick="openModal('volunteer-modal')">Volunteer Now</button>
+            </div>
+            
+            <div class="option-card">
+                <i class="fas fa-bullhorn"></i>
+                <h3>Community Ambassador</h3>
+                <p>Help us educate your community about proper diaper disposal and environmental health measures.</p>
+                <button class="btn" onclick="openModal('ambassador-modal')">Join Awareness</button>
+            </div>
+            
+            <div class="option-card">
+                <i class="fas fa-briefcase"></i>
+                <h3>Corporate Partnership</h3>
+                <p>Businesses can partner with us through CSR initiatives or employee volunteer programs.</p>
+                <button class="btn" onclick="openModal('partner-modal')">Partner With Us</button>
+            </div>
+            
+            <div class="option-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>Research Collaboration</h3>
+                <p>Academic institutions and researchers can collaborate on innovative recycling solutions.</p>
+                <button class="btn" onclick="openModal('research-modal')">Research With Us</button>
+            </div>
+            
+            <div class="option-card">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Collection Point</h3>
+                <p>Register your home or business as a diaper collection point in your neighborhood.</p>
+                <button class="btn" onclick="openModal('collection-modal')">Become a Collection Point</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Participants Sections -->
+    <section id="participants" class="participation-sections">
+        <div class="participation-section">
+            <h3>Our Sponsors</h3>
+            <div class="participation-grid" id="sponsors-grid">
+                <!-- Sponsors will be added here -->
+            </div>
+            <div class="add-participant-form">
+                <h4>Add New Sponsor</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sponsor-add-name">Name/Company*</label>
+                        <input type="text" id="sponsor-add-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sponsor-add-type">Sponsorship Type*</label>
+                        <select id="sponsor-add-type" required>
+                            <option value="financial">Financial</option>
+                            <option value="material">Material</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sponsor-add-country">Country*</label>
+                        <input type="text" id="sponsor-add-country" placeholder="e.g., Kenya" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sponsor-add-region">Region*</label>
+                        <input type="text" id="sponsor-add-region" placeholder="e.g., Nairobi County" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sponsor-add-village">Village/Town (if applicable)</label>
+                    <input type="text" id="sponsor-add-village" placeholder="e.g., Kawangware">
+                </div>
+                <div class="form-group">
+                    <label for="sponsor-add-amount">Amount/Contribution*</label>
+                    <input type="text" id="sponsor-add-amount" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="clearSponsorForm()">Clear</button>
+                    <button type="button" class="btn" onclick="addSponsor()">Add Sponsor</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="participation-section">
+            <h3>Our Volunteers</h3>
+            <div class="participation-grid" id="volunteers-grid">
+                <!-- Volunteers will be added here -->
+            </div>
+            <div class="add-participant-form">
+                <h4>Add New Volunteer</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="volunteer-add-name">Full Name*</label>
+                        <input type="text" id="volunteer-add-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="volunteer-add-field">Field of Interest*</label>
+                        <input type="text" id="volunteer-add-field" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="volunteer-add-country">Country*</label>
+                        <input type="text" id="volunteer-add-country" placeholder="e.g., Kenya" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="volunteer-add-region">Region*</label>
+                        <input type="text" id="volunteer-add-region" placeholder="e.g., Nairobi County" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="volunteer-add-village">Village/Town*</label>
+                    <input type="text" id="volunteer-add-village" placeholder="e.g., Kawangware" required>
+                </div>
+                <div class="form-group">
+                    <label for="volunteer-add-address">Specific Address (optional)</label>
+                    <input type="text" id="volunteer-add-address" placeholder="e.g., 123 Main Street">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="clearVolunteerForm()">Clear</button>
+                    <button type="button" class="btn" onclick="addVolunteer()">Add Volunteer</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="participation-section">
+            <h3>Our Ambassadors</h3>
+            <div class="participation-grid" id="ambassadors-grid">
+                <!-- Ambassadors will be added here -->
+            </div>
+            <div class="add-participant-form">
+                <h4>Add New Ambassador</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ambassador-add-name">Full Name*</label>
+                        <input type="text" id="ambassador-add-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ambassador-add-area">Area Covered*</label>
+                        <input type="text" id="ambassador-add-area" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ambassador-add-country">Country*</label>
+                        <input type="text" id="ambassador-add-country" placeholder="e.g., Kenya" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ambassador-add-region">Region*</label>
+                        <input type="text" id="ambassador-add-region" placeholder="e.g., Nairobi County" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-add-village">Village/Town*</label>
+                    <input type="text" id="ambassador-add-village" placeholder="e.g., Kawangware" required>
+                </div>
+                <div class="form-group">
+                    <label for="ambassador-add-achievements">Achievements*</label>
+                    <textarea id="ambassador-add-achievements" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="clearAmbassadorForm()">Clear</button>
+                    <button type="button" class="btn" onclick="addAmbassador()">Add Ambassador</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="participation-section">
+            <h3>Our Collection Points</h3>
+            <div class="participation-grid" id="collection-grid">
+                <!-- Collection points will be added here -->
+            </div>
+            <div class="add-participant-form">
+                <h4>Add New Collection Point</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="collection-add-name">Point Name*</label>
+                        <input type="text" id="collection-add-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="collection-add-type">Point Type*</label>
+                        <select id="collection-add-type" required>
+                            <option value="residential">Residential</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="institutional">Institutional</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="collection-add-country">Country*</label>
+                        <input type="text" id="collection-add-country" placeholder="e.g., Kenya" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="collection-add-region">Region*</label>
+                        <input type="text" id="collection-add-region" placeholder="e.g., Nairobi County" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="collection-add-village">Village/Town*</label>
+                        <input type="text" id="collection-add-village" placeholder="e.g., Kawangware" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="collection-add-neighborhood">Neighborhood/Street*</label>
+                        <input type="text" id="collection-add-neighborhood" placeholder="e.g., Moi Avenue" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="collection-add-address">Full Address*</label>
+                    <textarea id="collection-add-address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="collection-add-coordinates">GPS Coordinates (optional)</label>
+                    <input type="text" id="collection-add-coordinates" placeholder="e.g., -1.2921, 36.8219">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="clearCollectionForm()">Clear</button>
+                    <button type="button" class="btn" onclick="addCollectionPoint()">Add Collection Point</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Progress Chart Section -->
+    <section id="progress" class="progress-section">
+        <div class="section-title">
+            <h2>Our Global Progress</h2>
+            <p>Track our initiative's impact across different regions worldwide</p>
+        </div>
+        
+        <div class="chart-controls">
+            <select id="region-select" onchange="updateChart()">
+                <option value="all">All Regions</option>
+                <option value="africa">Africa</option>
+                <option value="asia">Asia</option>
+                <option value="europe">Europe</option>
+                <option value="americas">Americas</option>
+            </select>
+            
+            <select id="timeframe-select" onchange="updateChart()">
+                <option value="monthly">Monthly</option>
+                <option value="quarterly">Quarterly</option>
+                <option value="yearly">Yearly</option>
+            </select>
+            
+            <input type="month" id="date-select" value="2024-01" onchange="updateChart()">
+        </div>
+        
+        <div class="chart-container">
+            <canvas id="progress-chart"></canvas>
+        </div>
+        
+        <div class="coverage-stats">
+            <div class="coverage-stat">
+                <h4>Countries Reached</h4>
+                <div class="number" id="coverage-countries">12</div>
+            </div>
+            <div class="coverage-stat">
+                <h4>Regions Covered</h4>
+                <div class="number" id="coverage-regions">47</div>
+            </div>
+            <div class="coverage-stat">
+                <h4>Villages Served</h4>
+                <div class="number" id="coverage-villages">128</div>
+            </div>
+            <div class="coverage-stat">
+                <h4>Total Participants</h4>
+                <div class="number" id="coverage-participants">356</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Partner Management Section -->
+    <section id="partners" class="partner-section">
+        <div class="section-title">
+            <h2>Our Partners</h2>
+        </div>
+        
+        <p>We work with government agencies, NGOs, and private organizations to combat environmental pollution.</p>
+        
+        <div class="partner-logos" id="partner-logos">
+            <!-- Partners will be added here -->
+        </div>
+        
+        <div class="partner-management">
+            <h3>Add New Partner</h3>
+            <div class="partner-form">
+                <input type="text" id="partner-name" placeholder="Partner Name*" required>
+                <div class="image-upload-container">
+                    <label for="partner-logo-upload">Upload Logo:</label>
+                    <input type="file" id="partner-logo-upload" accept="image/*">
+                    <img id="partner-logo-preview" class="image-preview">
+                </div>
+                <input type="text" id="partner-country" placeholder="Country*" required>
+                <input type="text" id="partner-region" placeholder="Region*" required>
+                <button onclick="addPartner()">Add Partner</button>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Make a Difference?</h2>
+            <p>Join our growing community of environmental champions working to create a cleaner, healthier world.</p>
+            <a href="#contact" class="btn">Contact Us Today</a>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-title">
+            <h2>Contact Us</h2>
+        </div>
+        
+        <div class="contact-form">
+            <div class="form-group">
+                <label for="contact-name">Your Name*</label>
+                <input type="text" id="contact-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact-email">Email Address*</label>
+                <input type="email" id="contact-email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact-phone">Phone Number</label>
+                <input type="tel" id="contact-phone">
+            </div>
+            
+            <div class="form-group">
+                <label for="contact-subject">Subject*</label>
+                <input type="text" id="contact-subject" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact-message">Message*</label>
+                <textarea id="contact-message" required></textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn" onclick="submitContactForm()">Send Message</button>
+            </div>
+        </div>
+        
+        <div class="contact-options">
+            <div class="contact-option" onclick="sendWhatsAppMessage()">
+                <i class="fab fa-whatsapp"></i>
+                <span>Message us on WhatsApp</span>
+            </div>
+            
+            <div class="contact-option" onclick="makePhoneCall()">
+                <i class="fas fa-phone"></i>
+                <span>Call us directly</span>
+            </div>
+            
+            <div class="contact-option" onclick="sendEmail()">
+                <i class="fas fa-envelope"></i>
+                <span>Send us an email</span>
+            </div>
+        </div>
+        
+        <!-- Map Section -->
+        <div id="map"></div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <a href="#" class="footer-logo"><i class="fas fa-recycle"></i> BIN <span>TANKER-Ke</span></a>
+                <p>Leading the way in diaper waste management and recycling worldwide.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#theme">Our Theme</a></li>
+                    <li><a href="#get-involved">Get Involved</a></li>
+                    <li><a href="#participants">Participants</a></li>
+                    <li><a href="#partners">Partners</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
+                <p><i class="fas fa-phone"></i> +254 708 732 257</p>
+                <p><i class="fas fa-envelope"></i> nesoltd1@gmail.com</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2024 <span>BIN TANKER-Ke</span> | All Rights Reserved</p>
+        </div>
+    </footer>
+    
+    <!-- Sponsor Modal -->
+    <div id="sponsor-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('sponsor-modal')">&times;</span>
+            <h2>Become a Sponsor</h2>
+            <form id="sponsor-form">
+                <div class="form-group">
+                    <label for="sponsor-name">Your Name/Company Name*</label>
+                    <input type="text" id="sponsor-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sponsor-type">Sponsorship Type*</label>
+                    <select id="sponsor-type" required>
+                        <option value="">Select type</option>
+                        <option value="financial">Financial Contribution</option>
+                        <option value="material">Material Donation</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sponsor-amount">Amount/Description of Donation*</label>
+                    <input type="text" id="sponsor-amount" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sponsor-country">Country*</label>
+                    <input type="text" id="sponsor-country" placeholder="e.g., Kenya" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sponsor-region">Region*</label>
+                    <input type="text" id="sponsor-region" placeholder="e.g., Nairobi County" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sponsor-village">Village/Town (if applicable)</label>
+                    <input type="text" id="sponsor-village" placeholder="e.g., Kawangware">
+                </div>
+                
+                <div class="form-group">
+                    <label for="sponsor-contact">Phone Number*</label>
+                    <input type="tel" id="sponsor-contact" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sponsor-email">Email Address</label>
+                    <input type="email" id="sponsor-email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="sponsor-message">Additional Message</label>
+                    <textarea id="sponsor-message"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('sponsor-modal')">Cancel</button>
+                    <button type="button" class="btn" onclick="submitSponsorForm()">Submit Sponsorship</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Volunteer Modal -->
+    <div id="volunteer-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('volunteer-modal')">&times;</span>
+            <h2>Volunteer Application</h2>
+            <form id="volunteer-form">
+                <div class="form-group">
+                    <label for="volunteer-name">Full Name*</label>
+                    <input type="text" id="volunteer-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="volunteer-company">Company/Organization (if applicable)</label>
+                    <input type="text" id="volunteer-company">
+                </div>
+                
+                <div class="form-group">
+                    <label for="volunteer-field">Field of Study/Interest*</label>
+                    <input type="text" id="volunteer-field" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="volunteer-country">Country*</label>
+                    <input type="text" id="volunteer-country" placeholder="e.g., Kenya" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="volunteer-region">Region*</label>
+                    <input type="text" id="volunteer-region" placeholder="e.g., Nairobi County" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="volunteer-village">Village/Town*</label>
+                    <input type="text" id="volunteer-village" placeholder="e.g., Kawangware" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="volunteer-address">Specific Address (optional)</label>
+                    <input type="text" id="volunteer-address" placeholder="e.g., 123 Main Street">
+                </div>
+                
+                <div class="form-group">
+                    <label for="volunteer-skills">Skills/Expertise*</label>
+                    <textarea id="volunteer-skills" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="volunteer-contact">Phone Number*</label>
+                    <input type="tel" id="volunteer-contact" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="volunteer-email">Email Address*</label>
+                    <input type="email" id="volunteer-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="volunteer-availability">Availability*</label>
+                    <select id="volunteer-availability" required>
+                        <option value="">Select availability</option>
+                        <option value="weekdays">Weekdays</option>
+                        <option value="weekends">Weekends</option>
+                        <option value="both">Both</option>
+                        <option value="flexible">Flexible</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('volunteer-modal')">Cancel</button>
+                    <button type="button" class="btn" onclick="submitVolunteerForm()">Submit Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Ambassador Modal -->
+    <div id="ambassador-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('ambassador-modal')">&times;</span>
+            <h2>Community Ambassador Application</h2>
+            <form id="ambassador-form">
+                <div class="form-group">
+                    <label for="ambassador-name">Full Name*</label>
+                    <input type="text" id="ambassador-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ambassador-area">Area/Community*</label>
+                    <input type="text" id="ambassador-area" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ambassador-country">Country*</label>
+                    <input type="text" id="ambassador-country" placeholder="e.g., Kenya" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ambassador-region">Region*</label>
+                    <input type="text" id="ambassador-region" placeholder="e.g., Nairobi County" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ambassador-village">Village/Town*</label>
+                    <input type="text" id="ambassador-village" placeholder="e.g., Kawangware" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ambassador-achievements">Environmental Achievements/Experience*</label>
+                    <textarea id="ambassador-achievements" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ambassador-contact">Phone Number*</label>
+                    <input type="tel" id="ambassador-contact" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ambassador-email">Email Address</label>
+                    <input type="email" id="ambassador-email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="ambassador-reasons">Why do you want to be an ambassador?*</label>
+                    <textarea id="ambassador-reasons" required></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('ambassador-modal')">Cancel</button>
+                    <button type="button" class="btn" onclick="submitAmbassadorForm()">Submit Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Partner Modal -->
+    <div id="partner-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('partner-modal')">&times;</span>
+            <h2>Corporate Partnership</h2>
+            <form id="partner-form">
+                <div class="form-group">
+                    <label for="partner-company">Company Name*</label>
+                    <input type="text" id="partner-company" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partner-contact">Contact Person*</label>
+                    <input type="text" id="partner-contact" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partner-country">Country*</label>
+                    <input type="text" id="partner-country" placeholder="e.g., Kenya" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partner-region">Region*</label>
+                    <input type="text" id="partner-region" placeholder="e.g., Nairobi County" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partner-phone">Phone Number*</label>
+                    <input type="tel" id="partner-phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partner-email">Email Address*</label>
+                    <input type="email" id="partner-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partner-type">Partnership Type*</label>
+                    <select id="partner-type" required>
+                        <option value="">Select type</option>
+                        <option value="financial">Financial Support</option>
+                        <option value="volunteer">Employee Volunteering</option>
+                        <option value="collection">Collection Points</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partner-logo">Company Logo (optional)</label>
+                    <input type="file" id="partner-logo" accept="image/*">
+                    <img id="partner-logo-preview" class="image-preview">
+                </div>
+                
+                <div class="form-group">
+                    <label for="partner-message">Additional Information</label>
+                    <textarea id="partner-message"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('partner-modal')">Cancel</button>
+                    <button type="button" class="btn" onclick="submitPartnerForm()">Submit Partnership Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Research Modal -->
+    <div id="research-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('research-modal')">&times;</span>
+            <h2>Research Collaboration</h2>
+            <form id="research-form">
+                <div class="form-group">
+                    <label for="research-name">Your Name*</label>
+                    <input type="text" id="research-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="research-institution">Institution/Organization*</label>
+                    <input type="text" id="research-institution" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="research-position">Position/Title*</label>
+                    <input type="text" id="research-position" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="research-country">Country*</label>
+                    <input type="text" id="research-country" placeholder="e.g., Kenya" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="research-region">Region*</label>
+                    <input type="text" id="research-region" placeholder="e.g., Nairobi County" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="research-field">Research Field*</label>
+                    <input type="text" id="research-field" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="research-proposal">Research Proposal/Interest*</label>
+                    <textarea id="research-proposal" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="research-contact">Phone Number</label>
+                    <input type="tel" id="research-contact">
+                </div>
+                
+                <div class="form-group">
+                    <label for="research-email">Email Address*</label>
+                    <input type="email" id="research-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="research-duration">Expected Duration</label>
+                    <input type="text" id="research-duration">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('research-modal')">Cancel</button>
+                    <button type="button" class="btn" onclick="submitResearchForm()">Submit Research Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Collection Point Modal -->
+    <div id="collection-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('collection-modal')">&times;</span>
+            <h2>New Collection Point</h2>
+            <form id="collection-form">
+                <div class="form-group">
+                    <label for="collection-name">Point Name*</label>
+                    <input type="text" id="collection-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-type">Point Type*</label>
+                    <select id="collection-type" required>
+                        <option value="">Select type</option>
+                        <option value="residential">Residential</option>
+                        <option value="commercial">Commercial</option>
+                        <option value="institutional">Institutional</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-country">Country*</label>
+                    <input type="text" id="collection-country" placeholder="e.g., Kenya" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-region">Region*</label>
+                    <input type="text" id="collection-region" placeholder="e.g., Nairobi County" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-village">Village/Town*</label>
+                    <input type="text" id="collection-village" placeholder="e.g., Kawangware" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-neighborhood">Neighborhood/Street*</label>
+                    <input type="text" id="collection-neighborhood" placeholder="e.g., Moi Avenue" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-address">Full Address*</label>
+                    <textarea id="collection-address" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-contact">Contact Person*</label>
+                    <input type="text" id="collection-contact" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-phone">Phone Number*</label>
+                    <input type="tel" id="collection-phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-email">Email Address</label>
+                    <input type="email" id="collection-email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-hours">Operating Hours*</label>
+                    <input type="text" id="collection-hours" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-capacity">Estimated Capacity (diapers/week)</label>
+                    <input type="number" id="collection-capacity">
+                </div>
+                
+                <div class="form-group">
+                    <label for="collection-coordinates">GPS Coordinates (optional)</label>
+                    <input type="text" id="collection-coordinates" placeholder="e.g., -1.2921, 36.8219">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('collection-modal')">Cancel</button>
+                    <button type="button" class="btn" onclick="submitCollectionForm()">Register Collection Point</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Data storage
+        let sponsors = [];
+        let volunteers = [];
+        let ambassadors = [];
+        let collectionPoints = [];
+        let partners = [
+            { name: "NEMA", logo: "https://via.placeholder.com/150x80?text=NEMA", country: "Kenya", region: "Nairobi County" },
+            { name: "County Government", logo: "https://via.placeholder.com/150x80?text=County+Govt", country: "Kenya", region: "Nairobi County" },
+            { name: "Green Africa", logo: "https://via.placeholder.com/150x80?text=Green+Africa", country: "Kenya", region: "Nairobi County" }
+        ];
+        
+        // Coverage data
+        let coverageData = {
+            countries: new Set(),
+            regions: new Set(),
+            villages: new Set()
+        };
+        
+        // Initialize with sample data
+        function initializeSampleData() {
+            // Sample sponsors
+            sponsors = [
+                { name: "EcoFund Kenya", type: "financial", amount: "$5,000", country: "Kenya", region: "Nairobi County", village: "Kawangware" },
+                { name: "Green Materials Ltd", type: "material", amount: "1000kg recycling materials", country: "Kenya", region: "Mombasa County", village: "Nyali" },
+                { name: "Global Environmental Trust", type: "both", amount: "$10,000 + Equipment", country: "USA", region: "California", village: "" }
+            ];
+            
+            // Sample volunteers
+            volunteers = [
+                { name: "John M.", field: "Environmental Science", country: "Kenya", region: "Nairobi County", village: "Kawangware", address: "123 Main Street" },
+                { name: "Sarah Johnson", field: "Community Health", country: "Kenya", region: "Kisumu County", village: "Dunga", address: "Beach Road" },
+                { name: "David Smith", field: "Waste Management", country: "UK", region: "London", village: "", address: "" }
+            ];
+            
+            // Sample ambassadors
+            ambassadors = [
+                { name: "Amina Hammed", area: "Kibera Slums", country: "Kenya", region: "Nairobi County", village: "Kibera", achievements: "Educated 500 households on proper waste disposal" },
+                { name: "James Okoth", area: "Lake Victoria Region", country: "Kenya", region: "Kisumu County", village: "Dunga", achievements: "Organized community cleanups with 200+ participants" }
+            ];
+            
+            // Sample collection points
+            collectionPoints = [
+                { name: "Kawangware Health Center", type: "institutional", country: "Kenya", region: "Nairobi County", village: "Kawangware", neighborhood: "Near Market", address: "Next to Kawangware Market", coordinates: "-1.2921, 36.8219" },
+                { name: "Dunga Beach Cafe", type: "commercial", country: "Kenya", region: "Kisumu County", village: "Dunga", neighborhood: "Beach Road", address: "Dunga Beach Road", coordinates: "-0.0917, 34.7680" },
+                { name: "Greenfield Apartments", type: "residential", country: "Kenya", region: "Nairobi County", village: "Lavington", neighborhood: "Greenfield Estate", address: "Greenfield Estate, Lavington", coordinates: "-1.2684, 36.7969" }
+            ];
+            
+            // Update coverage data
+            updateCoverageData();
+            renderAllParticipants();
+            renderPartners();
+            updateCoverageStats();
+            initMap();
+        }
+        
+        // Update coverage data from all participant types
+        function updateCoverageData() {
+            coverageData.countries.clear();
+            coverageData.regions.clear();
+            coverageData.villages.clear();
+            
+            // Process sponsors
+            sponsors.forEach(sponsor => {
+                coverageData.countries.add(sponsor.country);
+                coverageData.regions.add(`${sponsor.country} - ${sponsor.region}`);
+                if (sponsor.village) {
+                    coverageData.villages.add(`${sponsor.country} - ${sponsor.region} - ${sponsor.village}`);
+                }
+            });
+            
+            // Process volunteers
+            volunteers.forEach(volunteer => {
+                coverageData.countries.add(volunteer.country);
+                coverageData.regions.add(`${volunteer.country} - ${volunteer.region}`);
+                if (volunteer.village) {
+                    coverageData.villages.add(`${volunteer.country} - ${volunteer.region} - ${volunteer.village}`);
+                }
+            });
+            
+            // Process ambassadors
+            ambassadors.forEach(ambassador => {
+                coverageData.countries.add(ambassador.country);
+                coverageData.regions.add(`${ambassador.country} - ${ambassador.region}`);
+                if (ambassador.village) {
+                    coverageData.villages.add(`${ambassador.country} - ${ambassador.region} - ${ambassador.village}`);
+                }
+            });
+            
+            // Process collection points
+            collectionPoints.forEach(point => {
+                coverageData.countries.add(point.country);
+                coverageData.regions.add(`${point.country} - ${point.region}`);
+                if (point.village) {
+                    coverageData.villages.add(`${point.country} - ${point.region} - ${point.village}`);
+                }
+            });
+            
+            // Process partners
+            partners.forEach(partner => {
+                if (partner.country) {
+                    coverageData.countries.add(partner.country);
+                }
+                if (partner.region) {
+                    coverageData.regions.add(`${partner.country} - ${partner.region}`);
+                }
+            });
+        }
+        
+        // Update coverage statistics display
+        function updateCoverageStats() {
+            document.getElementById('countries-count').textContent = coverageData.countries.size;
+            document.getElementById('regions-count').textContent = coverageData.regions.size;
+            document.getElementById('villages-count').textContent = coverageData.villages.size;
+            
+            document.getElementById('coverage-countries').textContent = coverageData.countries.size;
+            document.getElementById('coverage-regions').textContent = coverageData.regions.size;
+            document.getElementById('coverage-villages').textContent = coverageData.villages.size;
+            document.getElementById('coverage-participants').textContent = sponsors.length + volunteers.length + ambassadors.length;
+        }
+        
+        // Render all participants
+        function renderAllParticipants() {
+            renderSponsors();
+            renderVolunteers();
+            renderAmbassadors();
+            renderCollectionPoints();
+        }
+        
+        // Render sponsors
+        function renderSponsors() {
+            const grid = document.getElementById('sponsors-grid');
+            grid.innerHTML = '';
+            
+            sponsors.forEach(sponsor => {
+                const card = document.createElement('div');
+                card.className = 'participant-card';
+                card.innerHTML = `
+                    <h4>${sponsor.name}</h4>
+                    <p><strong>Type:</strong> ${sponsor.type}</p>
+                    <p><strong>Contribution:</strong> ${sponsor.amount}</p>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        ${sponsor.village ? `${sponsor.village}, ` : ''}${sponsor.region}, ${sponsor.country}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        // Render volunteers
+        function renderVolunteers() {
+            const grid = document.getElementById('volunteers-grid');
+            grid.innerHTML = '';
+            
+            volunteers.forEach(volunteer => {
+                const card = document.createElement('div');
+                card.className = 'participant-card';
+                card.innerHTML = `
+                    <h4>${volunteer.name}</h4>
+                    <p><strong>Field:</strong> ${volunteer.field}</p>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        ${volunteer.village ? `${volunteer.village}, ` : ''}${volunteer.region}, ${volunteer.country}
+                    </div>
+                    ${volunteer.address ? `<p><strong>Address:</strong> ${volunteer.address}</p>` : ''}
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        // Render ambassadors
+        function renderAmbassadors() {
+            const grid = document.getElementById('ambassadors-grid');
+            grid.innerHTML = '';
+            
+            ambassadors.forEach(ambassador => {
+                const card = document.createElement('div');
+                card.className = 'participant-card';
+                card.innerHTML = `
+                    <h4>${ambassador.name}</h4>
+                    <p><strong>Area:</strong> ${ambassador.area}</p>
+                    <p><strong>Achievements:</strong> ${ambassador.achievements.substring(0, 50)}...</p>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        ${ambassador.village ? `${ambassador.village}, ` : ''}${ambassador.region}, ${ambassador.country}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        // Render collection points
+        function renderCollectionPoints() {
+            const grid = document.getElementById('collection-grid');
+            grid.innerHTML = '';
+            
+            collectionPoints.forEach(point => {
+                const card = document.createElement('div');
+                card.className = 'participant-card';
+                card.innerHTML = `
+                    <h4>${point.name}</h4>
+                    <p><strong>Type:</strong> ${point.type}</p>
+                    <p><strong>Address:</strong> ${point.neighborhood}, ${point.address.substring(0, 50)}...</p>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        ${point.village ? `${point.village}, ` : ''}${point.region}, ${point.country}
+                    </div>
+                    ${point.coordinates ? `<p><strong>Coordinates:</strong> ${point.coordinates}</p>` : ''}
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        // Render partners
+        function renderPartners() {
+            const container = document.getElementById('partner-logos');
+            container.innerHTML = '';
+            
+            partners.forEach(partner => {
+                const logoDiv = document.createElement('div');
+                logoDiv.className = 'partner-logo';
+                
+                if (partner.logo) {
+                    const img = document.createElement('img');
+                    img.src = partner.logo;
+                    img.alt = `${partner.name} Logo`;
+                    logoDiv.appendChild(img);
+                } else {
+                    logoDiv.textContent = partner.name;
+                }
+                
+                container.appendChild(logoDiv);
+            });
+        }
+        
+        // Add new sponsor
+        function addSponsor() {
+            const name = document.getElementById('sponsor-add-name').value;
+            const type = document.getElementById('sponsor-add-type').value;
+            const country = document.getElementById('sponsor-add-country').value;
+            const region = document.getElementById('sponsor-add-region').value;
+            const village = document.getElementById('sponsor-add-village').value;
+            const amount = document.getElementById('sponsor-add-amount').value;
+            
+            if (!name || !type || !country || !region || !amount) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            sponsors.push({
+                name,
+                type,
+                amount,
+                country,
+                region,
+                village
+            });
+            
+            updateCoverageData();
+            renderSponsors();
+            updateCoverageStats();
+            clearSponsorForm();
+            alert('Sponsor added successfully!');
+        }
+        
+        // Clear sponsor form
+        function clearSponsorForm() {
+            document.getElementById('sponsor-add-name').value = '';
+            document.getElementById('sponsor-add-type').value = 'financial';
+            document.getElementById('sponsor-add-country').value = '';
+            document.getElementById('sponsor-add-region').value = '';
+            document.getElementById('sponsor-add-village').value = '';
+            document.getElementById('sponsor-add-amount').value = '';
+        }
+        
+        // Add new volunteer
+        function addVolunteer() {
+            const name = document.getElementById('volunteer-add-name').value;
+            const field = document.getElementById('volunteer-add-field').value;
+            const country = document.getElementById('volunteer-add-country').value;
+            const region = document.getElementById('volunteer-add-region').value;
+            const village = document.getElementById('volunteer-add-village').value;
+            const address = document.getElementById('volunteer-add-address').value;
+            
+            if (!name || !field || !country || !region || !village) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            volunteers.push({
+                name,
+                field,
+                country,
+                region,
+                village,
+                address
+            });
+            
+            updateCoverageData();
+            renderVolunteers();
+            updateCoverageStats();
+            clearVolunteerForm();
+            alert('Volunteer added successfully!');
+        }
+        
+        // Clear volunteer form
+        function clearVolunteerForm() {
+            document.getElementById('volunteer-add-name').value = '';
+            document.getElementById('volunteer-add-field').value = '';
+            document.getElementById('volunteer-add-country').value = '';
+            document.getElementById('volunteer-add-region').value = '';
+            document.getElementById('volunteer-add-village').value = '';
+            document.getElementById('volunteer-add-address').value = '';
+        }
+        
+        // Add new ambassador
+        function addAmbassador() {
+            const name = document.getElementById('ambassador-add-name').value;
+            const area = document.getElementById('ambassador-add-area').value;
+            const country = document.getElementById('ambassador-add-country').value;
+            const region = document.getElementById('ambassador-add-region').value;
+            const village = document.getElementById('ambassador-add-village').value;
+            const achievements = document.getElementById('ambassador-add-achievements').value;
+            
+            if (!name || !area || !country || !region || !village || !achievements) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            ambassadors.push({
+                name,
+                area,
+                country,
+                region,
+                village,
+                achievements
+            });
+            
+            updateCoverageData();
+            renderAmbassadors();
+            updateCoverageStats();
+            clearAmbassadorForm();
+            alert('Ambassador added successfully!');
+        }
+        
+        // Clear ambassador form
+        function clearAmbassadorForm() {
+            document.getElementById('ambassador-add-name').value = '';
+            document.getElementById('ambassador-add-area').value = '';
+            document.getElementById('ambassador-add-country').value = '';
+            document.getElementById('ambassador-add-region').value = '';
+            document.getElementById('ambassador-add-village').value = '';
+            document.getElementById('ambassador-add-achievements').value = '';
+        }
+        
+        // Add new collection point
+        function addCollectionPoint() {
+            const name = document.getElementById('collection-add-name').value;
+            const type = document.getElementById('collection-add-type').value;
+            const country = document.getElementById('collection-add-country').value;
+            const region = document.getElementById('collection-add-region').value;
+            const village = document.getElementById('collection-add-village').value;
+            const neighborhood = document.getElementById('collection-add-neighborhood').value;
+            const address = document.getElementById('collection-add-address').value;
+            const coordinates = document.getElementById('collection-add-coordinates').value;
+            
+            if (!name || !type || !country || !region || !village || !neighborhood || !address) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            collectionPoints.push({
+                name,
+                type,
+                country,
+                region,
+                village,
+                neighborhood,
+                address,
+                coordinates
+            });
+            
+            updateCoverageData();
+            renderCollectionPoints();
+            updateCoverageStats();
+            clearCollectionForm();
+            alert('Collection point added successfully!');
+        }
+        
+        // Clear collection form
+        function clearCollectionForm() {
+            document.getElementById('collection-add-name').value = '';
+            document.getElementById('collection-add-type').value = 'residential';
+            document.getElementById('collection-add-country').value = '';
+            document.getElementById('collection-add-region').value = '';
+            document.getElementById('collection-add-village').value = '';
+            document.getElementById('collection-add-neighborhood').value = '';
+            document.getElementById('collection-add-address').value = '';
+            document.getElementById('collection-add-coordinates').value = '';
+        }
+        
+        // Add new partner
+        function addPartner() {
+            const name = document.getElementById('partner-name').value;
+            const logoUpload = document.getElementById('partner-logo-upload');
+            const country = document.getElementById('partner-country').value;
+            const region = document.getElementById('partner-region').value;
+            
+            if (!name || !country || !region) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            // Handle logo upload
+            let logoUrl = null;
+            if (logoUpload.files.length > 0) {
+                const file = logoUpload.files[0];
+                logoUrl = URL.createObjectURL(file);
+            }
+            
+            partners.push({
+                name,
+                logo: logoUrl || null,
+                country,
+                region
+            });
+            
+            updateCoverageData();
+            renderPartners();
+            updateCoverageStats();
+            
+            document.getElementById('partner-name').value = '';
+            document.getElementById('partner-logo-upload').value = '';
+            document.getElementById('partner-country').value = '';
+            document.getElementById('partner-region').value = '';
+            document.getElementById('partner-logo-preview').style.display = 'none';
+            
+            alert('Partner added successfully!');
+        }
+        
+        // Image preview for partner logo
+        document.getElementById('partner-logo-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('partner-logo-preview');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Form submission functions
+        function submitSponsorForm() {
+            const name = document.getElementById('sponsor-name').value;
+            const type = document.getElementById('sponsor-type').value;
+            const amount = document.getElementById('sponsor-amount').value;
+            const country = document.getElementById('sponsor-country').value;
+            const region = document.getElementById('sponsor-region').value;
+            const village = document.getElementById('sponsor-village').value;
+            const contact = document.getElementById('sponsor-contact').value;
+            const email = document.getElementById('sponsor-email').value;
+            const message = document.getElementById('sponsor-message').value;
+            
+            // Validate required fields
+            if (!name || !type || !amount || !country || !region || !contact) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            // Prepare WhatsApp message
+            const whatsappMessage = `New Sponsor Application:\n\nName: ${name}\nType: ${type}\nAmount/Description: ${amount}\nCountry: ${country}\nRegion: ${region}\nVillage: ${village || 'N/A'}\nContact: ${contact}\nEmail: ${email || 'N/A'}\nMessage: ${message || 'N/A'}`;
+            
+            // Encode message for WhatsApp URL
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            
+            // Open WhatsApp with pre-filled message
+            window.open(`https://wa.me/254708732257?text=${encodedMessage}`, '_blank');
+            
+            // Add to local data
+            sponsors.push({
+                name,
+                type,
+                amount,
+                country,
+                region,
+                village
+            });
+            
+            updateCoverageData();
+            renderSponsors();
+            updateCoverageStats();
+            
+            // Close modal
+            closeModal('sponsor-modal');
+            
+            // Reset form
+            document.getElementById('sponsor-form').reset();
+            
+            // Show confirmation
+            alert('Thank you for your sponsorship! We will contact you shortly.');
+        }
+        
+        function submitVolunteerForm() {
+            const name = document.getElementById('volunteer-name').value;
+            const company = document.getElementById('volunteer-company').value;
+            const field = document.getElementById('volunteer-field').value;
+            const country = document.getElementById('volunteer-country').value;
+            const region = document.getElementById('volunteer-region').value;
+            const village = document.getElementById('volunteer-village').value;
+            const address = document.getElementById('volunteer-address').value;
+            const skills = document.getElementById('volunteer-skills').value;
+            const contact = document.getElementById('volunteer-contact').value;
+            const email = document.getElementById('volunteer-email').value;
+            const availability = document.getElementById('volunteer-availability').value;
+            
+            if (!name || !field || !country || !region || !village || !skills || !contact || !email || !availability) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            const whatsappMessage = `New Volunteer Application:\n\nName: ${name}\nCompany: ${company || 'N/A'}\nField: ${field}\nCountry: ${country}\nRegion: ${region}\nVillage: ${village}\nAddress: ${address || 'N/A'}\nSkills: ${skills}\nContact: ${contact}\nEmail: ${email}\nAvailability: ${availability}`;
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            
+            window.open(`https://wa.me/254708732257?text=${encodedMessage}`, '_blank');
+            
+            // Add to local data
+            volunteers.push({
+                name,
+                field,
+                country,
+                region,
+                village,
+                address,
+                company
+            });
+            
+            updateCoverageData();
+            renderVolunteers();
+            updateCoverageStats();
+            
+            closeModal('volunteer-modal');
+            document.getElementById('volunteer-form').reset();
+            alert('Thank you for volunteering! We will contact you shortly.');
+        }
+        
+        function submitAmbassadorForm() {
+            const name = document.getElementById('ambassador-name').value;
+            const area = document.getElementById('ambassador-area').value;
+            const country = document.getElementById('ambassador-country').value;
+            const region = document.getElementById('ambassador-region').value;
+            const village = document.getElementById('ambassador-village').value;
+            const achievements = document.getElementById('ambassador-achievements').value;
+            const contact = document.getElementById('ambassador-contact').value;
+            const email = document.getElementById('ambassador-email').value;
+            const reasons = document.getElementById('ambassador-reasons').value;
+            
+            if (!name || !area || !country || !region || !village || !achievements || !contact || !reasons) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            const whatsappMessage = `New Ambassador Application:\n\nName: ${name}\nArea: ${area}\nCountry: ${country}\nRegion: ${region}\nVillage: ${village}\nAchievements: ${achievements}\nContact: ${contact}\nEmail: ${email || 'N/A'}\nReasons: ${reasons}`;
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            
+            window.open(`https://wa.me/254708732257?text=${encodedMessage}`, '_blank');
+            
+            // Add to local data
+            ambassadors.push({
+                name,
+                area,
+                country,
+                region,
+                village,
+                achievements
+            });
+            
+            updateCoverageData();
+            renderAmbassadors();
+            updateCoverageStats();
+            
+            closeModal('ambassador-modal');
+            document.getElementById('ambassador-form').reset();
+            alert('Thank you for applying to be an ambassador! We will contact you shortly.');
+        }
+        
+        function submitPartnerForm() {
+            const company = document.getElementById('partner-company').value;
+            const contactPerson = document.getElementById('partner-contact').value;
+            const country = document.getElementById('partner-country').value;
+            const region = document.getElementById('partner-region').value;
+            const phone = document.getElementById('partner-phone').value;
+            const email = document.getElementById('partner-email').value;
+            const type = document.getElementById('partner-type').value;
+            const message = document.getElementById('partner-message').value;
+            
+            if (!company || !contactPerson || !country || !region || !phone || !email || !type) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            const whatsappMessage = `New Partnership Request:\n\nCompany: ${company}\nContact: ${contactPerson}\nCountry: ${country}\nRegion: ${region}\nPhone: ${phone}\nEmail: ${email}\nType: ${type}\nMessage: ${message || 'N/A'}`;
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            
+            window.open(`https://wa.me/254708732257?text=${encodedMessage}`, '_blank');
+            
+            // Handle logo upload
+            let logoUrl = null;
+            const logoUpload = document.getElementById('partner-logo');
+            if (logoUpload.files.length > 0) {
+                const file = logoUpload.files[0];
+                logoUrl = URL.createObjectURL(file);
+            }
+            
+            // Add to local data
+            partners.push({
+                name: company,
+                logo: logoUrl || null,
+                country,
+                region
+            });
+            
+            updateCoverageData();
+            renderPartners();
+            updateCoverageStats();
+            
+            closeModal('partner-modal');
+            document.getElementById('partner-form').reset();
+            alert('Thank you for your partnership request! We will contact you shortly.');
+        }
+        
+        function submitResearchForm() {
+            const name = document.getElementById('research-name').value;
+            const institution = document.getElementById('research-institution').value;
+            const position = document.getElementById('research-position').value;
+            const country = document.getElementById('research-country').value;
+            const region = document.getElementById('research-region').value;
+            const field = document.getElementById('research-field').value;
+            const proposal = document.getElementById('research-proposal').value;
+            const contact = document.getElementById('research-contact').value;
+            const email = document.getElementById('research-email').value;
+            const duration = document.getElementById('research-duration').value;
+            
+            if (!name || !institution || !position || !country || !region || !field || !proposal || !email) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            const whatsappMessage = `New Research Collaboration Request:\n\nName: ${name}\nInstitution: ${institution}\nPosition: ${position}\nCountry: ${country}\nRegion: ${region}\nField: ${field}\nProposal: ${proposal}\nContact: ${contact || 'N/A'}\nEmail: ${email}\nDuration: ${duration || 'N/A'}`;
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            
+            window.open(`https://wa.me/254708732257?text=${encodedMessage}`, '_blank');
+            closeModal('research-modal');
+            document.getElementById('research-form').reset();
+            alert('Thank you for your research request! We will contact you shortly.');
+        }
+        
+        function submitCollectionForm() {
+            const name = document.getElementById('collection-name').value;
+            const type = document.getElementById('collection-type').value;
+            const country = document.getElementById('collection-country').value;
+            const region = document.getElementById('collection-region').value;
+            const village = document.getElementById('collection-village').value;
+            const neighborhood = document.getElementById('collection-neighborhood').value;
+            const address = document.getElementById('collection-address').value;
+            const contactPerson = document.getElementById('collection-contact').value;
+            const phone = document.getElementById('collection-phone').value;
+            const email = document.getElementById('collection-email').value;
+            const hours = document.getElementById('collection-hours').value;
+            const capacity = document.getElementById('collection-capacity').value;
+            const coordinates = document.getElementById('collection-coordinates').value;
+            
+            if (!name || !type || !country || !region || !village || !neighborhood || !address || !contactPerson || !phone || !hours) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            const whatsappMessage = `New Collection Point Registration:\n\nName: ${name}\nType: ${type}\nCountry: ${country}\nRegion: ${region}\nVillage: ${village}\nNeighborhood: ${neighborhood}\nAddress: ${address}\nContact: ${contactPerson}\nPhone: ${phone}\nEmail: ${email || 'N/A'}\nHours: ${hours}\nCapacity: ${capacity || 'N/A'}\nCoordinates: ${coordinates || 'N/A'}`;
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            
+            window.open(`https://wa.me/254708732257?text=${encodedMessage}`, '_blank');
+            
+            // Add to local data
+            collectionPoints.push({
+                name,
+                type,
+                country,
+                region,
+                village,
+                neighborhood,
+                address,
+                coordinates
+            });
+            
+            updateCoverageData();
+            renderCollectionPoints();
+            updateCoverageStats();
+            
+            closeModal('collection-modal');
+            document.getElementById('collection-form').reset();
+            alert('Thank you for registering a collection point! We will contact you shortly.');
+        }
+        
+        // Contact form functions
+        function submitContactForm() {
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const phone = document.getElementById('contact-phone').value;
+            const subject = document.getElementById('contact-subject').value;
+            const message = document.getElementById('contact-message').value;
+            
+            if (!name || !email || !subject || !message) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            const whatsappMessage = `New Contact Form Submission:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'N/A'}\nSubject: ${subject}\nMessage: ${message}`;
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            
+            window.open(`https://wa.me/254708732257?text=${encodedMessage}`, '_blank');
+            
+            document.getElementById('contact-name').value = '';
+            document.getElementById('contact-email').value = '';
+            document.getElementById('contact-phone').value = '';
+            document.getElementById('contact-subject').value = '';
+            document.getElementById('contact-message').value = '';
+            
+            alert('Thank you for your message! We will contact you shortly.');
+        }
+        
+        function sendWhatsAppMessage() {
+            window.open('https://wa.me/254708732257', '_blank');
+        }
+        
+        function makePhoneCall() {
+            window.location.href = 'tel:+254708732257';
+        }
+        
+        function sendEmail() {
+            window.location.href = 'mailto:nesoltd1@gmail.com';
+        }
+        
+        // Initialize Google Map
+        function initMap() {
+            // Default coordinates for Nairobi, Kenya
+            const nairobi = { lat: -1.2921, lng: 36.8219 };
+            
+            // Create a map centered at Nairobi
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: nairobi,
+            });
+            
+            // Add a marker at the location
+            new google.maps.Marker({
+                position: nairobi,
+                map: map,
+                title: "BIN TANKER-Ke Headquarters",
+            });
+        }
+        
+        // Progress chart
+        let progressChart;
+        
+        function initProgressChart() {
+            const ctx = document.getElementById('progress-chart').getContext('2d');
+            
+            progressChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Africa', 'Asia', 'Europe', 'Americas'],
+                    datasets: [{
+                        label: 'Participants',
+                        data: [120, 45, 30, 25],
+                        backgroundColor: '#2e8b57',
+                        borderColor: '#2e8b57',
+                        borderWidth: 1
+                    }, {
+                        label: 'Collection Points',
+                        data: [85, 15, 10, 8],
+                        backgroundColor: '#3cb371',
+                        borderColor: '#3cb371',
+                        borderWidth: 1
+                    }, {
+                        label: 'Diapers Collected (thousands)',
+                        data: [120, 25, 15, 10],
+                        backgroundColor: '#ff6b6b',
+                        borderColor: '#ff6b6b',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Global Impact by Continent',
+                            font: {
+                                size: 18
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateChart() {
+            const region = document.getElementById('region-select').value;
+            const timeframe = document.getElementById('timeframe-select').value;
+            const date = document.getElementById('date-select').value;
+            
+            // Update chart based on filters
+            if (region === 'all') {
+                progressChart.data.labels = ['Africa', 'Asia', 'Europe', 'Americas'];
+                progressChart.data.datasets[0].data = [
+                    sponsors.filter(s => s.country && s.country.toLowerCase().includes('kenya')).length + 
+                    volunteers.filter(v => v.country && v.country.toLowerCase().includes('kenya')).length +
+                    ambassadors.filter(a => a.country && a.country.toLowerCase().includes('kenya')).length,
+                    sponsors.filter(s => s.country && (s.country.toLowerCase().includes('india') || s.country.toLowerCase().includes('china'))).length + 
+                    volunteers.filter(v => v.country && (v.country.toLowerCase().includes('india') || v.country.toLowerCase().includes('china'))).length +
+                    ambassadors.filter(a => a.country && (a.country.toLowerCase().includes('india') || a.country.toLowerCase().includes('china'))).length,
+                    sponsors.filter(s => s.country && (s.country.toLowerCase().includes('uk') || s.country.toLowerCase().includes('germany'))).length + 
+                    volunteers.filter(v => v.country && (v.country.toLowerCase().includes('uk') || v.country.toLowerCase().includes('germany'))).length +
+                    ambassadors.filter(a => a.country && (a.country.toLowerCase().includes('uk') || a.country.toLowerCase().includes('germany'))).length,
+                    sponsors.filter(s => s.country && (s.country.toLowerCase().includes('usa') || s.country.toLowerCase().includes('canada'))).length + 
+                    volunteers.filter(v => v.country && (v.country.toLowerCase().includes('usa') || v.country.toLowerCase().includes('canada'))).length +
+                    ambassadors.filter(a => a.country && (a.country.toLowerCase().includes('usa') || a.country.toLowerCase().includes('canada'))).length
+                ];
+                progressChart.data.datasets[1].data = [
+                    collectionPoints.filter(c => c.country && c.country.toLowerCase().includes('kenya')).length,
+                    collectionPoints.filter(c => c.country && (c.country.toLowerCase().includes('india') || c.country.toLowerCase().includes('china'))).length,
+                    collectionPoints.filter(c => c.country && (c.country.toLowerCase().includes('uk') || c.country.toLowerCase().includes('germany'))).length,
+                    collectionPoints.filter(c => c.country && (c.country.toLowerCase().includes('usa') || c.country.toLowerCase().includes('canada'))).length
+                ];
+                progressChart.options.plugins.title.text = 'Global Impact by Continent';
+            } else {
+                progressChart.data.labels = ['Participants', 'Collection Points', 'Diapers Collected'];
+                
+                // Simulate data for specific regions
+                let participantCount, pointCount, diaperCount;
+                
+                switch(region) {
+                    case 'africa':
+                        participantCount = sponsors.filter(s => s.country && s.country.toLowerCase().includes('kenya')).length + 
+                                         volunteers.filter(v => v.country && v.country.toLowerCase().includes('kenya')).length +
+                                         ambassadors.filter(a => a.country && a.country.toLowerCase().includes('kenya')).length;
+                        pointCount = collectionPoints.filter(c => c.country && c.country.toLowerCase().includes('kenya')).length;
+                        diaperCount = Math.floor(participantCount * 100);
+                        break;
+                    case 'asia':
+                        participantCount = sponsors.filter(s => s.country && (s.country.toLowerCase().includes('india') || s.country.toLowerCase().includes('china'))).length + 
+                                         volunteers.filter(v => v.country && (v.country.toLowerCase().includes('india') || v.country.toLowerCase().includes('china'))).length +
+                                         ambassadors.filter(a => a.country && (a.country.toLowerCase().includes('india') || a.country.toLowerCase().includes('china'))).length;
+                        pointCount = collectionPoints.filter(c => c.country && (c.country.toLowerCase().includes('india') || c.country.toLowerCase().includes('china'))).length;
+                        diaperCount = Math.floor(participantCount * 80);
+                        break;
+                    case 'europe':
+                        participantCount = sponsors.filter(s => s.country && (s.country.toLowerCase().includes('uk') || s.country.toLowerCase().includes('germany'))).length + 
+                                         volunteers.filter(v => v.country && (v.country.toLowerCase().includes('uk') || v.country.toLowerCase().includes('germany'))).length +
+                                         ambassadors.filter(a => a.country && (a.country.toLowerCase().includes('uk') || a.country.toLowerCase().includes('germany'))).length;
+                        pointCount = collectionPoints.filter(c => c.country && (c.country.toLowerCase().includes('uk') || c.country.toLowerCase().includes('germany'))).length;
+                        diaperCount = Math.floor(participantCount * 60);
+                        break;
+                    case 'americas':
+                        participantCount = sponsors.filter(s => s.country && (s.country.toLowerCase().includes('usa') || s.country.toLowerCase().includes('canada'))).length + 
+                                         volunteers.filter(v => v.country && (v.country.toLowerCase().includes('usa') || v.country.toLowerCase().includes('canada'))).length +
+                                         ambassadors.filter(a => a.country && (a.country.toLowerCase().includes('usa') || a.country.toLowerCase().includes('canada'))).length;
+                        pointCount = collectionPoints.filter(c => c.country && (c.country.toLowerCase().includes('usa') || c.country.toLowerCase().includes('canada'))).length;
+                        diaperCount = Math.floor(participantCount * 70);
+                        break;
+                }
+                
+                progressChart.data.datasets[0].data = [participantCount, pointCount, diaperCount];
+                progressChart.data.datasets[1].data = [0, 0, 0]; // Clear second dataset
+                progressChart.data.datasets[2].data = [0, 0, 0]; // Clear third dataset
+                
+                progressChart.options.plugins.title.text = `Impact in ${region.charAt(0).toUpperCase() + region.slice(1)}`;
+            }
+            
+            progressChart.update();
+        }
+        
+        // Image preview for partner logo
+        document.getElementById('partner-logo').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('partner-logo-preview');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Initialize the page
+        window.addEventListener('load', () => {
+            initProgressChart();
+            initializeSampleData();
+            
+            // Animation on scroll
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.option-card, .stat-item, .home-image, .participant-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Set initial state for animated elements
+            document.querySelectorAll('.option-card, .stat-item, .home-image, .participant-card').forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'all 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll();
+        });
+    </script>
+    
+    <!-- Load Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+</body>
+</html>
