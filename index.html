@@ -1084,7 +1084,17 @@
                 <i class="fas fa-map-marker-alt"></i>
                 <h3>Collection Point</h3>
                 <p>Register your home or business as a diaper collection point in your neighborhood.</p>
-                <button class="btn" onclick="openModal('collection-modal')">Become a Collection Point</button>
+             <div class="add-participant-form">
+                <h4>Add New Sponsor</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sponsor-add-name">Name/Company*</label>
+                        <input type="text" id="sponsor-add-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sponsor-add-type">Sponsorship Type*</label>
+                        <select id="sponsor-add-type" required>
+                     <button class="btn" onclick="openModal('collection-modal')">Become a Collection Point</button>
             </div>
         </div>
     </section>
@@ -1096,136 +1106,25 @@
             <div class="participation-grid" id="sponsors-grid">
                 <!-- Sponsors will be added here -->
             </div>
-            <div class="add-participant-form">
-                <h4>Add New Sponsor</h4>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="sponsor-add-name">Name/Company*</label>
-                        <input type="text" id="sponsor-add-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="sponsor-add-type">Sponsorship Type*</label>
-                        <select id="sponsor-add-type" required>
-                            <option value="financial">Financial</option>
+                      <option value="financial">Financial</option>
                             <option value="material">Material</option>
                             <option value="both">Both</option>
                         </select>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="sponsor-add-country">Country*</label>
-                        <input type="text" id="sponsor-add-country" placeholder="e.g., Kenya" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="sponsor-add-region">Region*</label>
-                        <input type="text" id="sponsor-add-region" placeholder="e.g., Nairobi County" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="sponsor-add-village">Village/Town (if applicable)</label>
-                    <input type="text" id="sponsor-add-village" placeholder="e.g., Kawangware">
-                </div>
-                <div class="form-group">
-                    <label for="sponsor-add-amount">Amount/Contribution*</label>
-                    <input type="text" id="sponsor-add-amount" required>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-outline" onclick="clearSponsorForm()">Clear</button>
-                    <button type="button" class="btn" onclick="addSponsor()">Add Sponsor</button>
-                </div>
-            </div>
-        </div>
-        
+                
         <div class="participation-section">
             <h3>Our Volunteers</h3>
             <div class="participation-grid" id="volunteers-grid">
                 <!-- Volunteers will be added here -->
             </div>
-            <div class="add-participant-form">
-                <h4>Add New Volunteer</h4>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="volunteer-add-name">Full Name*</label>
-                        <input type="text" id="volunteer-add-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="volunteer-add-field">Field of Interest*</label>
-                        <input type="text" id="volunteer-add-field" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="volunteer-add-country">Country*</label>
-                        <input type="text" id="volunteer-add-country" placeholder="e.g., Kenya" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="volunteer-add-region">Region*</label>
-                        <input type="text" id="volunteer-add-region" placeholder="e.g., Nairobi County" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="volunteer-add-village">Village/Town*</label>
-                    <input type="text" id="volunteer-add-village" placeholder="e.g., Kawangware" required>
-                </div>
-                <div class="form-group">
-                    <label for="volunteer-add-address">Specific Address (optional)</label>
-                    <input type="text" id="volunteer-add-address" placeholder="e.g., 123 Main Street">
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-outline" onclick="clearVolunteerForm()">Clear</button>
-                    <button type="button" class="btn" onclick="addVolunteer()">Add Volunteer</button>
-                </div>
-            </div>
-        </div>
-        
+                  
         <div class="participation-section">
             <h3>Our Ambassadors</h3>
             <div class="participation-grid" id="ambassadors-grid">
                 <!-- Ambassadors will be added here -->
             </div>
-            <div class="add-participant-form">
-                <h4>Add New Ambassador</h4>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="ambassador-add-name">Full Name*</label>
-                        <input type="text" id="ambassador-add-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ambassador-add-area">Area Covered*</label>
-                        <input type="text" id="ambassador-add-area" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="ambassador-add-country">Country*</label>
-                        <input type="text" id="ambassador-add-country" placeholder="e.g., Kenya" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ambassador-add-region">Region*</label>
-                        <input type="text" id="ambassador-add-region" placeholder="e.g., Nairobi County" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="ambassador-add-village">Village/Town*</label>
-                    <input type="text" id="ambassador-add-village" placeholder="e.g., Kawangware" required>
-                </div>
-                <div class="form-group">
-                    <label for="ambassador-add-achievements">Achievements*</label>
-                    <textarea id="ambassador-add-achievements" required></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-outline" onclick="clearAmbassadorForm()">Clear</button>
-                    <button type="button" class="btn" onclick="addAmbassador()">Add Ambassador</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="participation-section">
-            <h3>Our Collection Points</h3>
-            <div class="participation-grid" id="collection-grid">
-                <!-- Collection points will be added here -->
-            </div>
+            
             <div class="add-participant-form">
                 <h4>Add New Collection Point</h4>
                 <div class="form-row">
@@ -1242,42 +1141,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="collection-add-country">Country*</label>
-                        <input type="text" id="collection-add-country" placeholder="e.g., Kenya" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="collection-add-region">Region*</label>
-                        <input type="text" id="collection-add-region" placeholder="e.g., Nairobi County" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="collection-add-village">Village/Town*</label>
-                        <input type="text" id="collection-add-village" placeholder="e.g., Kawangware" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="collection-add-neighborhood">Neighborhood/Street*</label>
-                        <input type="text" id="collection-add-neighborhood" placeholder="e.g., Moi Avenue" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="collection-add-address">Full Address*</label>
-                    <textarea id="collection-add-address" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="collection-add-coordinates">GPS Coordinates (optional)</label>
-                    <input type="text" id="collection-add-coordinates" placeholder="e.g., -1.2921, 36.8219">
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-outline" onclick="clearCollectionForm()">Clear</button>
-                    <button type="button" class="btn" onclick="addCollectionPoint()">Add Collection Point</button>
-                </div>
-            </div>
-        </div>
-    </section>
-    
+                
     <!-- Progress Chart Section -->
     <section id="progress" class="progress-section">
         <div class="section-title">
